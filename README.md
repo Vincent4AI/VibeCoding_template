@@ -1,120 +1,145 @@
 # VibeCoding Template
 
-**SDD (Spec-Driven Development) + Claude Code 项目初始化模板**
+**SDD (Spec-Driven Development) + Claude Code Project Initialization Template**
 
-一个为 Claude Code vibecoding 工作流设计的项目模板。新建项目时，使用初始化 prompt 一键生成完整的开发框架：规范驱动开发体系、进度追踪、跨会话记忆。
+A project template designed for the Claude Code vibecoding workflow. When starting a new project, use the initialization prompt to generate a complete development framework in one shot: spec-driven development system, progress tracking, and cross-session memory.
 
-## 为什么需要这个模板？
+**[English](./EN/) | [中文](./CN/)**
 
-Vibecoding 很爽，但项目一大就容易失控：
+---
 
-- Claude Code 每次对话都是"失忆"的，上下文丢失
-- 没有规范约束，生成的代码风格不统一
-- 改了东西不知道改到哪了，进度追踪靠脑子
-- 模块之间接口没对齐，联调时到处是坑
+## Why This Template?
 
-**这个模板用 SDD 流程 + 自动化进度追踪解决这些问题。**
+Vibecoding is great — until your project gets big enough to lose control:
 
-## 核心理念
+- Claude Code is "amnesic" across sessions — context is lost every time
+- Without spec constraints, generated code is inconsistent in style
+- No way to track what's been changed — progress tracking is all in your head
+- Module interfaces aren't aligned — integration is full of surprises
+
+**This template solves these problems with SDD workflow + automated progress tracking.**
+
+## Core Idea
 
 ```
-先写规范 → 再写代码 → 自动追踪
+Write spec first → Then write code → Auto-track progress
 ```
 
-| 机制 | 解决什么问题 |
-|------|-------------|
-| `CLAUDE.md` | 统一编码约定、接口定义、禁止操作 |
-| `TODO.md` | 功能路线图，完成即自动打勾 |
-| `docs/sdd/STATUS.md` | 模块状态矩阵，一目了然 |
-| `docs/sdd/specs/` | 模块规范，约束代码生成 |
-| `MEMORY.md` | 跨会话记忆，不再重复解释上下文 |
+| Mechanism | What It Solves |
+|-----------|---------------|
+| `CLAUDE.md` | Unified coding conventions, interface definitions, forbidden operations |
+| `TODO.md` | Feature roadmap, auto-checked on completion |
+| `docs/sdd/STATUS.md` | Module status matrix, everything at a glance |
+| `docs/sdd/specs/` | Module specs that constrain code generation |
+| `MEMORY.md` | Cross-session memory, no more re-explaining context |
 
-## 快速开始
+## Quick Start
 
-### 1. 新建项目目录
+### 1. Create a new project directory
 
 ```bash
 mkdir my-project && cd my-project
 ```
 
-### 2. 打开 Claude Code
+### 2. Open Claude Code
 
 ```bash
 claude
 ```
 
-### 3. 粘贴初始化 Prompt
+### 3. Paste the initialization prompt
 
-复制 [`init-prompt.md`](./init-prompt.md) 的内容，填好 6 个项目信息字段：
+Copy the contents of the init prompt file — pick your language:
+
+- **English**: [`EN/init-prompt.md`](./EN/init-prompt.md)
+- **中文**: [`CN/init-prompt.md`](./CN/init-prompt.md)
+
+Fill in the 6 project info fields:
 
 ```
-- 项目名称: my-awesome-app
-- 一句话描述: 一个做 XX 的工具
-- 语言/技术栈: TypeScript + Node.js
-- 构建工具: npm
-- 测试框架: Jest
-- 数据库: PostgreSQL
+- Project Name: my-awesome-app
+- One-line Description: A tool that does XX
+- Language/Tech Stack: TypeScript + Node.js
+- Build Tool: npm
+- Test Framework: Jest
+- Database: PostgreSQL
 ```
 
-粘贴到 Claude Code 发送，**一次性自动生成所有文件**。
+Paste into Claude Code and send — **all files are generated automatically in one shot**.
 
-### 4. 开始开发
+### 4. Start developing
 
-生成的文件结构：
+Generated file structure:
 
 ```
 my-project/
-├── CLAUDE.md                          # 项目约定 (Claude Code 自动读取)
-├── TODO.md                            # 开发路线图
+├── CLAUDE.md                          # Project conventions (auto-read by Claude Code)
+├── TODO.md                            # Development roadmap
 ├── docs/
 │   └── sdd/
-│       ├── README.md                  # SDD 流程说明
-│       ├── STATUS.md                  # 模块状态矩阵
+│       ├── README.md                  # SDD process docs
+│       ├── STATUS.md                  # Module status matrix
 │       ├── templates/
-│       │   └── module-spec.tmpl.md    # 模块规范模板
-│       ├── specs/                     # 各模块的规范文档
-│       └── adr/                       # 架构决策记录
+│       │   └── module-spec.tmpl.md    # Module spec template
+│       ├── specs/                     # Individual module specs
+│       └── adr/                       # Architecture Decision Records
 │           ├── README.md
 │           └── template.md
 └── .claude/projects/.../memory/
-    └── MEMORY.md                      # 跨会话记忆
+    └── MEMORY.md                      # Cross-session memory
 ```
 
-## SDD 开发流程
+## SDD Workflow
 
 ```
 ┌─────────┐    ┌─────────┐    ┌──────────┐    ┌─────────┐    ┌──────────┐
 │  Draft  │───▶│ Review  │───▶│ Approved │───▶│  Impl   │───▶│ Verified │
 └─────────┘    └─────────┘    └──────────┘    └─────────┘    └──────────┘
-  写规范        评审规范        规范通过        编写代码       测试通过
+ Write spec    Review spec    Spec approved   Write code     Tests pass
 ```
 
-**每完成一个模块，Claude Code 自动更新：**
-1. `TODO.md` — 打勾 `[x]`
-2. `docs/sdd/STATUS.md` — 更新状态矩阵
-3. `MEMORY.md` — 更新跨会话记忆
+**After completing each module, Claude Code automatically updates:**
+1. `TODO.md` — Checks off `[x]`
+2. `docs/sdd/STATUS.md` — Updates the status matrix
+3. `MEMORY.md` — Updates cross-session memory
 
-## 自动进度追踪
+## Auto Progress Tracking
 
-这是模板的核心特性。在 `CLAUDE.md` 中内置了强制指令：
+This is the template's core feature. A mandatory instruction is built into `CLAUDE.md`:
 
-> 完成任何模块或功能的实现后，Claude Code **必须** 自动更新 TODO.md、STATUS.md、MEMORY.md，无需用户提醒。
+> After completing any module or feature implementation, Claude Code **MUST** automatically update TODO.md, STATUS.md, and MEMORY.md — no user prompting required.
 
-你不需要手动维护进度，专注写需求就好。
+You don't need to maintain progress manually — just focus on writing requirements.
 
-## 模板文件说明
+## Template Structure
 
-| 文件 | 作用 |
-|------|------|
-| `init-prompt.md` | 初始化 prompt，新项目时复制粘贴使用 |
-| `README.md` | 本说明文件 |
+```
+VibeCoding_template/
+├── README.md                              # This file
+├── EN/                                    # English version
+│   ├── init-prompt.md                     # Initialization prompt
+│   └── docs/sdd/                          # SDD framework files
+│       ├── README.md
+│       ├── STATUS.md
+│       ├── templates/module-spec.tmpl.md
+│       ├── specs/
+│       └── adr/
+└── CN/                                    # 中文版本
+    ├── init-prompt.md                     # 初始化 prompt
+    └── docs/sdd/                          # SDD 框架文件
+        ├── README.md
+        ├── STATUS.md
+        ├── templates/module-spec.tmpl.md
+        ├── specs/
+        └── adr/
+```
 
-## 适用场景
+## Use Cases
 
-- 个人项目的 vibecoding 开发
-- 需要 Claude Code 长期维护的项目
-- 多模块、需要接口对齐的中大型项目
-- 任何想让 AI 编码更可控的场景
+- Personal vibecoding projects
+- Projects requiring long-term Claude Code maintenance
+- Multi-module projects needing interface alignment
+- Any scenario where you want more control over AI coding
 
 ## License
 
