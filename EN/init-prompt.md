@@ -70,11 +70,34 @@ Development workflow: Write spec → Implement → Test → Verify.
 
 ## Progress Tracking (Auto-maintained)
 
-After completing any module or feature implementation, Claude Code **MUST** automatically update the following three files without user prompting:
+After completing any module or feature implementation, Claude Code **MUST** automatically update the following files without user prompting:
+
+### Files That Must Be Updated
 
 1. **`TODO.md`** — Change the corresponding item from `[ ]` to `[x]`
 2. **`docs/sdd/STATUS.md`** — Update the module status matrix (status, implementation path, test path); move new modules from "Pending Modules" into the matrix
 3. **`.claude/projects/.../memory/MEMORY.md`** — Update "Recently Completed" and "Next Priorities"
+
+### Trigger Conditions
+
+The above updates must be performed **immediately** when any of the following events occur:
+
+| Event | TODO.md | STATUS.md | MEMORY.md |
+|-------|---------|-----------|-----------|
+| Completed a module/feature | Check `[x]` | Status → Impl/Verified | Update "Recently Completed" |
+| Wrote or updated a module spec | — | Status → Draft/Review | Update "Recently Completed" |
+| Fixed a bug | Check related item or add new `[x]` | Add note in Notes column | Update "Recently Completed" |
+| Added tests | — | Update Tests column | — |
+| Refactored code | — | Update Implementation column (if path changed) | Record refactoring |
+| Added dependency or made architecture decision | — | — | Update "Key Conventions" |
+| Completed a phase milestone | Mark entire Phase complete | Batch update | Update "Next Priorities" |
+
+### Update Rules
+
+- **Immediacy**: Update right after the action is completed — do not batch updates until the end
+- **Accuracy**: Only mark items that are actually completed — do not mark ahead of time
+- **Consistency**: All three files must stay in sync — no checking off TODO without updating STATUS
+- **Atomicity**: Updating all three files is treated as a single operation — update all or none
 
 This is a mandatory process and must not be skipped.
 ```
